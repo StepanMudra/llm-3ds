@@ -15,10 +15,13 @@ simple English children's stories – they are not chatbots.
 | stories260K | 0.26 M | fp32 | 1 MB | **38.4 tokens/s** – simple but readable stories |
 | stories260K | 0.26 M | int8 | 0.27 MB | 47.2 tokens/s, but collapses into "there there there… upon upon upon" – int8 breaks tiny models |
 | stories15M | 15 M | int8 | 17 MB | **1.54 tokens/s** – coherent stories |
-| stories42M | 42 M | int8 | 44 MB | _to be measured_ (edge of the memory limit) |
+| stories42M | 42 M | int8 | 44 MB | **0.68 tokens/s** – best stories; uses 51.7 of ~58 MB |
 | stories15M | 15 M | fp32 | 60 MB | does not fit: `malloc failed (60816028 bytes)` – ~58 MB are available for weights |
 
 The same code runs at ~10,000 tokens/s on an Apple M4 (one core).
+
+![Speed on the original 3DS](docs/img/01_rychlost_3ds.png)
+![Memory per model](docs/img/02_pamet_3ds.png)
 
 ## Features
 - Model picker: every `*.bin` in `sdmc:/3ds/LLM3DS/` (fp32 or int8, detected automatically).
