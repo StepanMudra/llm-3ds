@@ -99,7 +99,7 @@ static int pick_model(int sel) {
         printf("  Choose a model:\n\n");
         if (!n_models) printf("  No models in " MODEL_DIR "\n");
         for (int i = 0; i < n_models; i++)
-            printf("%s %-24.24s %6ld KB %s\x1b[0m\n", i == sel ? "\x1b[32m >" : "  ", models[i].file,
+            printf("%s %-20.20s %5ld KB %s\x1b[0m\n", i == sel ? "\x1b[32m >" : "  ", models[i].file,
                    models[i].bytes / 1024, models[i].int8 ? "int8" : "fp32");
         printf("\n");
         free_ram_line();
