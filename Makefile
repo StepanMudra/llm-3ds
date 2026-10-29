@@ -38,9 +38,9 @@ DATA		:=	data
 INCLUDES	:=	include
 GRAPHICS	:=	gfx
 GFXBUILD	:=	$(BUILD)
-ROMFS		:=	romfs
+#ROMFS		:=	romfs
 APP_TITLEt:=tLLM 3DS
-APP_DESCRIPTION	:=	llama2.c stories260K offline
+APP_DESCRIPTION	:=	llama2.c tiny LLMs offline, model picker
 APP_AUTHORt:=tStepan Mudra
 #GFXBUILD	:=	$(ROMFS)/gfx
 
