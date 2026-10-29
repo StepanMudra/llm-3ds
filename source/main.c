@@ -31,6 +31,7 @@ static void show_info(Transformer *t, int runs, double best) {
         printf("  Speed:    \x1b[32m%.1f tokens/s\x1b[0m\n", g_tok_s);
         printf("  Best:     %.1f tokens/s (%d runs)\n\n", best, runs);
     }
+    printf("  Y: type your own start (keyboard)\n");
     printf("  A: new story   B: greedy story\n");
     printf("  START: exit\n");
     consoleSelect(&top);
@@ -53,6 +54,7 @@ int main(void) {
     Sampler sampler;
     build_sampler(&sampler, transformer.config.vocab_size, 1.0f, 0.9f, osGetTime());
 
+    static char prompt[128] = "Once upon a time";
     int runs = 0;
     double best = 0;
     consoleClear();
@@ -63,11 +65,23 @@ int main(void) {
         hidScanInput();
         u32 k = hidKeysDown();
         if (k & KEY_START) break;
+        if (k & KEY_Y) {
+            // classic 3DS software keyboard; the model continues whatever you type
+            SwkbdState kb;
+            char typed[128] = {0};
+            swkbdInit(&kb, SWKBD_TYPE_NORMAL, 2, sizeof(typed) - 1);
+            swkbdSetHintText(&kb, "Start of a story (English)");
+            swkbdSetInitialText(&kb, prompt);
+            if (swkbdInputText(&kb, typed, sizeof(typed)) == SWKBD_BUTTON_CONFIRM && typed[0]) {
+                snprintf(prompt, sizeof(prompt), "%s", typed);
+                k |= KEY_A;  // generate right away
+            }
+        }
         if (k & (KEY_A | KEY_B)) {
             consoleClear();
             sampler.temperature = (k & KEY_B) ? 0.0f : 1.0f;
             sampler.rng_state = osGetTime();
-            generate(&transformer, &tokenizer, &sampler, "Once upon a time", STEPS);
+            generate(&transformer, &tokenizer, &sampler, prompt, STEPS);
             runs++;
             if (g_tok_s > best) best = g_tok_s;
             show_info(&transformer, runs, best);
