@@ -45,7 +45,7 @@ static void scan_models(void) {
     struct dirent *e;
     while ((e = readdir(d)) && n_models < MAX_MODELS) {
         size_t n = strlen(e->d_name);
-        if (n < 5 || strcmp(e->d_name + n - 4, ".bin") || !strncmp(e->d_name, "tok", 3)) continue;
+        if (n < 5 || e->d_name[0] == '.' || strcmp(e->d_name + n - 4, ".bin") || !strncmp(e->d_name, "tok", 3)) continue;
         Entry *m = &models[n_models];
         snprintf(m->file, sizeof(m->file), "%s", e->d_name);
         char path[128];
