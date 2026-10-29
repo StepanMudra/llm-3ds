@@ -39,9 +39,9 @@ INCLUDES	:=	include
 GRAPHICS	:=	gfx
 GFXBUILD	:=	$(BUILD)
 #ROMFS		:=	romfs
-APP_TITLEt:=tLLM 3DS
+APP_TITLE	:=	LLM 3DS
 APP_DESCRIPTION	:=	llama2.c tiny LLMs offline, model picker
-APP_AUTHORt:=tStepan Mudra
+APP_AUTHOR	:=	Stepan Mudra
 #GFXBUILD	:=	$(ROMFS)/gfx
 
 #---------------------------------------------------------------------------------
