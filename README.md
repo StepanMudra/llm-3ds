@@ -78,6 +78,14 @@ Launch through the Homebrew Launcher.
 - int8 token embeddings are dequantized per row instead of into a 37 MB float table.
 - A failed load returns to the menu (`exit()` inside llama2.c jumps back via `longjmp`).
 
+## Related projects
+Other people have run small LLMs on game consoles – this project builds on the same idea:
+- [llama-3ds](https://github.com/requiredtruth/llama-3ds) – llama.cpp-based LLM app for the
+  **New** 3DS / New 2DS XL (this project targets the original 3DS and uses llama2.c instead).
+- [llama2psp](https://github.com/sixf0ur/llama2psp) – llama2.c on the PlayStation Portable.
+- [psvita-llm](https://github.com/callbacked/psvita-llm) – llama2.c on the PS Vita, with on-device model downloads.
+- [llama2PS3.c](https://github.com/andreidavid/llama2PS3.c) – stories15M on the PlayStation 3.
+
 ## Credits and licenses
 - llama2.c © Andrej Karpathy, MIT – see `LICENSE.llama2c`.
 - TinyStories dataset: Eldan & Li, 2023. Model weights are not included in this repository.
