@@ -10,6 +10,12 @@
 #include <sys/stat.h>
 #include "llm_backend.h"
 
+#include <malloc.h>
+
+// libctru splits app memory 50/50 between the linear heap (GPU/system buffers) and malloc().
+// Model weights need malloc(), so keep the linear heap small (framebuffers + keyboard fit easily).
+u32 __ctru_linear_heap_size = 6 * 1024 * 1024;
+
 #define MODEL_DIR "sdmc:/3ds/LLM3DS/"
 #define MAX_MODELS 16
 
@@ -78,7 +84,10 @@ static int vocab_of(const char *path, int int8) {
 }
 
 static void free_ram_line(void) {
-    printf("  Free RAM: %lu KB\n", (unsigned long)(osGetMemRegionFree(MEMREGION_APPLICATION) / 1024));
+    extern u32 __ctru_heap_size;
+    unsigned long used = (unsigned long)mallinfo().uordblks;
+    printf("  RAM for models: %lu / %lu KB free\n", (unsigned long)(__ctru_heap_size - used) / 1024,
+           (unsigned long)__ctru_heap_size / 1024);
 }
 
 static int pick_model(int sel) {

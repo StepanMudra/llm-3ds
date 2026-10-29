@@ -164,6 +164,7 @@ void read_checkpoint(char* checkpoint, Config* config, TransformerWeights* weigh
 void build_transformer(Transformer *t, char* checkpoint_path) {
     // read in the Config and the Weights from the checkpoint
     read_checkpoint(checkpoint_path, &t->config, &t->weights, &t->fd, &t->data, &t->file_size);
+    if (t->config.seq_len > 256) t->config.seq_len = 256;  // 3DS port: we never generate more, saves KV-cache RAM
     // allocate the RunState buffers
     malloc_run_state(&t->state, &t->config);
 }
