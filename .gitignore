@@ -1,0 +1,11 @@
+build/
+*.3dsx
+*.elf
+*.smdh
+*.cia
+# model weights are downloaded, not versioned (see README)
+romfs/
+models/
+src_dl/
+.DS_Store
+._*
