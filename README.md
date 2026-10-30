@@ -106,8 +106,11 @@ Other people have run small LLMs on game consoles – this project builds on the
 - [llama2PS3.c](https://github.com/andreidavid/llama2PS3.c) – stories15M on the PlayStation 3.
 
 ## Credits and licenses
-- This project: MIT – see `LICENSE`.
-- llama2.c © Andrej Karpathy, MIT – see `LICENSE.llama2c`.
+- **This project** (menu, keyboard, the two-backend app, 3DS changes, quantizer, figures):
+  © 2026 Stepan Mudra, MIT – see `LICENSE`.
+- **Model inference core** (`source/llama2_run.inc`, `source/llama2q_run.inc`): based on `run.c` and
+  `runq.c` from [llama2.c](https://github.com/karpathy/llama2.c), © 2023 Andrej Karpathy, MIT – see
+  `LICENSE.llama2c`. Each file starts with a note listing the 3DS changes.
 - TinyStories dataset: Eldan & Li, 2023. Model weights are not included in this repository.
 - Built with the help of [Claude](https://claude.ai) (Anthropic) as an AI pair programmer.
 - Figures: `docs/make_figures.py` (SVG) + `docs/svg2png.swift` (render to PNG on macOS).

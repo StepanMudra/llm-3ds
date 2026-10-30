@@ -1,3 +1,15 @@
+/*
+ * Based on runq.c from llama2.c – https://github.com/karpathy/llama2.c
+ * Copyright (c) 2023 Andrej Karpathy, MIT License (see LICENSE.llama2c).
+ *
+ * Modified for the Nintendo 3DS by Stepan Mudra (MIT, see LICENSE):
+ *  - the checkpoint is read into RAM with malloc + fread instead of mmap
+ *  - token embeddings are dequantized one row at a time (no 37 MB float table)
+ *  - timing via osGetTime() from libctru
+ *  - context capped at 256 tokens to save KV-cache memory
+ *  - tokens/s of the last run kept in g_tok_s / g_tokens for the UI
+ */
+
 /* Inference for Llama-2 Transformer model in pure C, int8 quantized forward pass. */
 
 #include <stdio.h>
