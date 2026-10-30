@@ -91,7 +91,10 @@ static void free_ram_line(void) {
 }
 
 static int pick_model(int sel) {
+    int dirty = 1;  // redraw only after a key press; clearing every frame tears the console
     while (aptMainLoop()) {
+        if (!dirty) goto input;
+        dirty = 0;
         consoleSelect(&bottom);
         consoleClear();
         printf("\x1b[1;1H  LLM on Nintendo 3DS (2011)\n");
@@ -104,14 +107,15 @@ static int pick_model(int sel) {
         printf("\n");
         free_ram_line();
         printf("\n  Up/Down: choose   A: load\n  START: exit\n");
+    input:
         gfxFlushBuffers();
         gfxSwapBuffers();
         gspWaitForVBlank();
         hidScanInput();
         u32 k = hidKeysDown();
         if (k & KEY_START) return -1;
-        if (n_models && (k & KEY_DOWN)) sel = (sel + 1) % n_models;
-        if (n_models && (k & KEY_UP)) sel = (sel + n_models - 1) % n_models;
+        if (n_models && (k & KEY_DOWN)) { sel = (sel + 1) % n_models; dirty = 1; }
+        if (n_models && (k & KEY_UP)) { sel = (sel + n_models - 1) % n_models; dirty = 1; }
         if (n_models && (k & KEY_A)) return sel;
     }
     return -1;
