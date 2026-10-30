@@ -20,8 +20,24 @@ simple English children's stories – they are not chatbots.
 
 The same code runs at ~10,000 tokens/s on an Apple M4 (one core).
 
-![Speed on the original 3DS](docs/img/01_rychlost_3ds.png)
-![Memory per model](docs/img/02_pamet_3ds.png)
+Each speed is a single run on the device.
+
+![Speed on the original 3DS](docs/img/01_speed.png)
+![Memory per model](docs/img/02_memory.png)
+
+## Sample output
+
+Int8 quantization breaks the tiny model but makes the 15M model fit:
+
+![Quantization](docs/img/03_quantization.png)
+
+Screens redrawn from photos of the console (text exactly as generated):
+
+| stories42M · int8 · 0.68 tok/s | stories260K · int8 · broken |
+|---|---|
+| ![stories42M](docs/img/07_screen_42M_int8.png) | ![stories260K int8](docs/img/05_screen_260K_int8.png) |
+
+More: [260K fp32](docs/img/04_screen_260K_fp32.png) · [15M int8](docs/img/06_screen_15M_int8.png) · [15M fp32 does not fit](docs/img/08_screen_15M_fp32_does_not_fit.png)
 
 ## Features
 - Model picker: every `*.bin` in `sdmc:/3ds/LLM3DS/` (fp32 or int8, detected automatically).
@@ -92,3 +108,5 @@ Other people have run small LLMs on game consoles – this project builds on the
 ## Credits and licenses
 - llama2.c © Andrej Karpathy, MIT – see `LICENSE.llama2c`.
 - TinyStories dataset: Eldan & Li, 2023. Model weights are not included in this repository.
+- Built with the help of [Claude](https://claude.ai) (Anthropic) as an AI pair programmer.
+- Figures: `docs/make_figures.py` (SVG) + `docs/svg2png.swift` (render to PNG on macOS).
